@@ -1,5 +1,6 @@
 import { Box, Pressable, Text } from "native-base";
 import React, { useState, useEffect } from "react";
+import BrandText from "./BrandText";
 function BrandButton(props) {
   return (
     <Pressable w="80%" onPress={props.click}>
@@ -7,10 +8,10 @@ function BrandButton(props) {
         return (
           <Box
             w="full"
-            h="50"
+            h="60"
             alignItems="center"
             justifyContent="center"
-            bg={isPressed ? "blue.500" : isHovered ? "blue.500" : "brand.300"}
+            bg={isPressed ? "light.accent" : isHovered ? "blue.400" : "light.accent"}
             style={{
               transform: [
                 {
@@ -21,9 +22,7 @@ function BrandButton(props) {
             p="2"
             rounded="10"
           >
-            <Text fontSize={20} color="brand.100">
-              {props.text}
-            </Text>
+             <BrandText text={props.text} size={20} />
           </Box>
         );
       }}

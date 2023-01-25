@@ -1,6 +1,7 @@
 import { Text } from "native-base";
 import React, { useState, useEffect } from "react";
-import useStore from "../State/store";
+import { useColorScheme } from "react-native";
+
 function BrandText(props) {
   const colourScheme = useColorScheme();
 
@@ -8,7 +9,7 @@ function BrandText(props) {
     <Text
       key={props.key}
       color={
-        colourScheme === "light" ? props.color || "light.text" : "dark.text"
+        colourScheme === "light" ? props.color || "light.text" : props.color || "dark.text"
       }
       fontWeight={props.weight || "normal"}
       fontSize={props.size || 14}
