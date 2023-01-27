@@ -7,11 +7,11 @@ function BrandButton(props) {
       {({ isHovered, isFocused, isPressed }) => {
         return (
           <Box
-            w="full"
+            w={props.width||"full"}
             h="60"
             alignItems="center"
             justifyContent="center"
-            bg={isPressed ? "light.accent" : isHovered ? "blue.400" : "light.accent"}
+            bg={props.disabled? 'gray.300' :isPressed ? props.color || "light.accent" : isHovered ? "blue.400" : props.color || "light.accent"}
             style={{
               transform: [
                 {
@@ -22,7 +22,7 @@ function BrandButton(props) {
             p="2"
             rounded="10"
           >
-             <BrandText text={props.text} size={20} />
+             <BrandText color={props.textcolor} text={props.text} size={20} />
           </Box>
         );
       }}

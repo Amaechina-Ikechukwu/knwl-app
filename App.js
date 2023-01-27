@@ -3,6 +3,7 @@ import { StyleSheet, useColorScheme } from "react-native";
 import { NativeBaseProvider, extendTheme, Text, Box } from "native-base";
 import Login from './components/Authentication/Login'
 import React, { useState, useEffect } from "react";
+import General from "./components/screens/General";
 
 export default function App() {
   const colorScheme = useColorScheme();
@@ -42,8 +43,8 @@ export default function App() {
     },
   });
   return (
-    <NativeBaseProvider theme={theme}>
-      <Login />
+    <NativeBaseProvider  theme={theme}>
+      <General/>
     </NativeBaseProvider>
   );
 }

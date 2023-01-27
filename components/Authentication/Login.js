@@ -23,13 +23,15 @@ function Login() {
     clientId: "35313808604-lahi6a5db8n0uhjd92q07v0ddb176rv2.apps.googleusercontent.com",
   });
 
+
+  
   React.useEffect(() => {
     if (response?.type === "success") {
       const { id_token } = response.params;
       const auth = getAuth(app);
       const provider = new GoogleAuthProvider();
       // const credential = provider.credential(id_token);
-      signInWithCredential(auth, GoogleAuthProvider.credential(id_token));;
+      signInWithCredential(auth, GoogleAuthProvider.credential(id_token));
     }
   }, [response]);
   return (
