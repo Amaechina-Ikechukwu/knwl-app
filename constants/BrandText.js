@@ -9,7 +9,9 @@ function BrandText(props) {
     <Text
       key={props.key}
       color={
-        colourScheme === "light" ? props.color || "light.text" : props.color || "dark.text"
+        colourScheme == "light"
+          ? props.color || "light.text"
+          : props.color || "dark.text"
       }
       fontWeight={props.weight || "normal"}
       fontSize={props.size || 14}

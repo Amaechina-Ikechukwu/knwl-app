@@ -11,8 +11,9 @@ import { Avatar, Box, PresenceTransition, VStack } from "native-base";
 import BrandButton from "../../../constants/BrandButton";
 import BrandText from "../../../constants/BrandText";
 import * as ImagePicker from "expo-image-picker";
+import { getAuth } from "firebase/auth";
 
-const AddPhoto = () => {
+const AddPhoto = ({ navigation }) => {
   const colors = ["background", "accent", "success", "error"];
   const [selectedId, setSelectedId] = useState(undefined);
   const colorScheme = useColorScheme();
@@ -66,7 +67,8 @@ const AddPhoto = () => {
           click={pickImage}
         />
         <BrandButton
-          disabled={createAvatar}
+          disabled={image == null}
+          click={() => navigation.navigate("createavatar", { image: image })}
           color={colorScheme + ".success"}
           textcolor={"dark.text"}
           text={"Create Avatar With Your Photo"}
