@@ -11,13 +11,19 @@ import { Avatar, Box, PresenceTransition, VStack } from "native-base";
 import BrandButton from "../../../constants/BrandButton";
 import BrandText from "../../../constants/BrandText";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
+import { knwlapi } from "../../../assets/api";
+import { getAuth } from "firebase/auth";
+import { useEffect } from "react";
+import { app } from "../../../firebaseConfig";
+import axios from "axios";
 
 const AddPhoto = () => {
   const colors = ["background", "accent", "success", "error"];
   const [selectedId, setSelectedId] = useState(undefined);
   const colorScheme = useColorScheme();
   const [createAvatar, setCreateAvatar] = useState(false);
-
+  const [imageBase64, setImageBase64] = useState();
   const [image, setImage] = useState(null);
 
   const pickImage = async () => {
@@ -29,13 +35,51 @@ const AddPhoto = () => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
+      setCreateAvatar(true);
       setImage(result.assets[0].uri);
+      const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, {
+        encoding: "base64",
+      });
+      setImageBase64(base64);
     }
   };
 
+  const postImage = async () => {
+    axios
+      .post(
+        `${knwlapi}/createavatar`,
+        {
+          image_url: imageBase64,
+          user_id: getAuth().currentUser.uid,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: "Bearer " + getAuth().currentUser.uid,
+          },
+        }
+      )
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    // await fetch(`${knwlapi}/createavatar`, {
+    //   method: "post",
+    //   headers: {
+    //     Authorization: "Bearer" + getAuth().currentUser.uid,
+    //   },
+    //   body: JSON.stringify({
+    //     imageurl: imageBase64,
+    //     userId: getAuth().currentUser.uid,
+    //   }),
+    // }).then((data) => console.log(data));
+  };
+  useEffect(() => {
+    console.log(imageBase64);
+  }, []);
   return (
     <VersalBox>
       {" "}
@@ -66,9 +110,10 @@ const AddPhoto = () => {
           click={pickImage}
         />
         <BrandButton
-          disabled={createAvatar}
+          disabled={createAvatar == false}
           color={colorScheme + ".success"}
           textcolor={"dark.text"}
+          click={postImage}
           text={"Create Avatar With Your Photo"}
         />
       </VStack>
