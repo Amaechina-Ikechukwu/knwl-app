@@ -11,6 +11,7 @@ import { Avatar, Box, PresenceTransition, VStack } from "native-base";
 import BrandButton from "../../../constants/BrandButton";
 import BrandText from "../../../constants/BrandText";
 import { getAuth } from "firebase/auth";
+import RNFS from "react-native-fs";
 
 const AvatarSetUp = ({ route }) => {
   const colors = ["background", "accent", "success", "error"];
@@ -18,11 +19,14 @@ const AvatarSetUp = ({ route }) => {
   const colorScheme = useColorScheme();
   const { image } = route.params;
 
-  const storePicture = () => {
+  const storePicture = async () => {
     // Create the form data object
+    await RNFS.readFile(image, "base64").then((res) => {
+      console.log(res);
+    });
     var data = new FormData();
     data.append("picture", {
-      uri: image,
+      image_url: image,
       name: "selfie.jpg",
       type: "image/jpg",
       user_id: "gn9FvGNKqzBCIoBzteNk",
