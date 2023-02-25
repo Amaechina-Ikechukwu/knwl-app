@@ -5,6 +5,8 @@ import Login from "./components/Authentication/Login";
 import React, { useState, useEffect } from "react";
 import General from "./components/screens/General";
 import { app } from "./firebaseConfig";
+import { getApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 export default function App() {
   const colorScheme = useColorScheme();
