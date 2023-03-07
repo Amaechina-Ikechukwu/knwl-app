@@ -9,6 +9,8 @@ import useStore from "../../store";
 import AvatarSetUp from "./Profile/AvatarSetUp";
 import AddPhoto from "./Profile/AddPhoto";
 import Chat from "./Chats/Chat";
+import VersalBox from "../../constants/VersalBox";
+import BrandText from "../../constants/BrandText";
 const General = () => {
   const { isSignedIn } = useStore(
     (state) => ({
@@ -17,18 +19,26 @@ const General = () => {
     shallow
   );
   const Stack = createNativeStackNavigator();
+  if (isSignedIn == undefined) {
+    return (
+      <VersalBox>
+        <BrandText text={"loading"} />
+      </VersalBox>
+    );
+  }
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
         initialRouteName="Home"
       >
-        {isSignedIn == undefined ? (
-          <Stack.Screen name="login" component={Chat} />
+        {isSignedIn == false ? (
+          <Stack.Screen name="Home" component={Login} />
         ) : (
           <>
             {" "}
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="openai" component={Chat} />
+            <Stack.Screen name="addphoto" component={AddPhoto} />
           </>
         )}
       </Stack.Navigator>

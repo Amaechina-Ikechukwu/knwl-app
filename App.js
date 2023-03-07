@@ -6,11 +6,26 @@ import React, { useState, useEffect } from "react";
 import General from "./components/screens/General";
 import { app } from "./firebaseConfig";
 import { getApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import useStore from "./store";
+import { shallow } from "zustand/shallow";
 
 export default function App() {
   const colorScheme = useColorScheme();
-  useEffect(() => {}, []);
+  const { setIsSigned } = useStore(
+    (state) => ({ setIsSigned: state.setIsSigned }),
+    shallow
+  );
+
+  useEffect(() => {
+    onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        setIsSigned(true);
+      } else {
+        setIsSigned(false);
+      }
+    });
+  }, []);
   const theme = extendTheme({
     colors: {
       // Add new color
