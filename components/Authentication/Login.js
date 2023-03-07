@@ -10,6 +10,7 @@ import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 import BrandButton from "../../constants/BrandButton";
 import BrandText from "../../constants/BrandText";
 import VersalBox from "../../constants/VersalBox";
+import { useColorScheme } from "react-native";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -19,7 +20,7 @@ function Login() {
     clientId:
       "35313808604-lahi6a5db8n0uhjd92q07v0ddb176rv2.apps.googleusercontent.com",
   });
-
+  const colorScheme = useColorScheme();
   React.useEffect(() => {
     if (response?.type === "success") {
       const { id_token } = response.params;
@@ -39,14 +40,17 @@ function Login() {
         justifyContent={"center"}
       >
         <BrandButton
+          textcolor={colorScheme + ".background"}
           text={"Join KWNL"}
-          color={"light.background"}
           click={() => {
             promptAsync();
           }}
         />
         <Box alignItems={"center"} p={2} w="80%" borderRadius={20}>
-          <BrandText text={"Authentication is always by Google"} />
+          <BrandText
+            text={"Authentication is always by Google"}
+            color={"light.accentSecondary"}
+          />
         </Box>
       </VStack>
     </VersalBox>

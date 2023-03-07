@@ -8,6 +8,7 @@ import { shallow } from "zustand/shallow";
 import useStore from "../../store";
 import AvatarSetUp from "./Profile/AvatarSetUp";
 import AddPhoto from "./Profile/AddPhoto";
+import Chat from "./Chats/Chat";
 const General = () => {
   const { isSignedIn } = useStore(
     (state) => ({
@@ -23,13 +24,11 @@ const General = () => {
         initialRouteName="Home"
       >
         {isSignedIn == undefined ? (
-          <>
-            <Stack.Screen name="login" component={AddPhoto} />
-            <Stack.Screen name="createavatar" component={AvatarSetUp} />
-          </>
+          <Stack.Screen name="login" component={Chat} />
         ) : (
           <>
-            <Stack.Screen name="Home" component={Login} />
+            {" "}
+            <Stack.Screen name="Home" component={HomeScreen} />
           </>
         )}
       </Stack.Navigator>
